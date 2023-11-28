@@ -21,12 +21,14 @@ export class AppComponent {
   selectedSquare: Square | null = null;
   currentPlayer = -1;
   suits: string[] = [];
+  statusMsg: string;
 
   constructor() {
     this.board = new Board();
     // console.log(this.board);
     this.suits = ['white', 'black'];
     this.currentPlayer = 0;
+    this.statusMsg = '';
   }
 
   gameLoop() {
@@ -130,6 +132,14 @@ export class AppComponent {
       // console.log('not check');
       return false;
     }
+  }
+
+  checkMate() {
+    this.statusMsg = 'Checkmate';
+  }
+
+  staleMate() {
+    this.statusMsg = 'Stalemate';
   }
 
   findCoordinates(
@@ -278,9 +288,9 @@ export class AppComponent {
       const cpuMove = this.computerFindTactics(piecesMove);
       this.movePiece(cpuMove[0], cpuMove[1]);
     } else if (this.isCheck()) {
-      console.log('checkmate');
+      this.checkMate();
     } else {
-      console.log('stalemate');
+      this.staleMate();
     }
   }
 
